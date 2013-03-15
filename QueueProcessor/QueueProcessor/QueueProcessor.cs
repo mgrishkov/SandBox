@@ -9,12 +9,13 @@ namespace QueueProcessor
 {
     public interface IRequest
     {
+        int ID { get; set; }
         void Execute();
     }
     
-    public class QueueProcessor<T> : IDisposable where T : IRequest
+    public class QueueProcessor : IDisposable
     {
-        public class RequesExecutingEventArgs<T> : EventArgs
+        public class RequesExecutingEventArgs : EventArgs
         {
             public enum EStatus
             {
@@ -23,15 +24,15 @@ namespace QueueProcessor
                 Failed = 3
             }
 
-            public T Request { get; set; }
+            public IRequest Request { get; set; }
             public EStatus State { get; set; }
             public string Message { get; set; }
         }
 
-        public event EventHandler<RequesExecutingEventArgs<T>> RequesExecuting;
+        public event EventHandler<RequesExecutingEventArgs> RequesExecuting;
         public event EventHandler QueueProcessed;
 
-        private BlockingCollection<T> _queue;
+        private BlockingCollection<IRequest> _queue;
         private readonly int _maxConcurrent;
         private List<Task> _tasks;
         private volatile bool _locker;
@@ -39,7 +40,7 @@ namespace QueueProcessor
         public QueueProcessor(int MaxConcurrent)
         {
             _maxConcurrent = MaxConcurrent;
-            _queue = new BlockingCollection<T>();
+            _queue = new BlockingCollection<IRequest>();
             _tasks = new List<Task>();
         }
         public void Process()
@@ -60,7 +61,7 @@ namespace QueueProcessor
         {
             if (!_queue.IsCompleted)
             {
-                T request = _queue.Take();
+                IRequest request = _queue.Take();
                 Execute(request);
                 if (!_queue.IsCompleted)
                 {
@@ -69,27 +70,27 @@ namespace QueueProcessor
                 };
             };
         }
-        private void Execute(T request)
+        private void Execute(IRequest request)
         {
-            var eventArgs = new RequesExecutingEventArgs<T>()
+            var eventArgs = new RequesExecutingEventArgs()
             {
                 Request = request,
-                State = RequesExecutingEventArgs<T>.EStatus.Executing,
+                State = RequesExecutingEventArgs.EStatus.Executing,
                 Message = String.Empty
             };
             OnRequesExecuting(eventArgs);
             try
             {
                 request.Execute();
-                eventArgs.State = RequesExecutingEventArgs<T>.EStatus.Comleted;
+                eventArgs.State = RequesExecutingEventArgs.EStatus.Comleted;
             }
             catch (Exception e)
             {
-                eventArgs.State = RequesExecutingEventArgs<T>.EStatus.Failed;
+                eventArgs.State = RequesExecutingEventArgs.EStatus.Failed;
                 eventArgs.Message = e.Message;
             };
         }
-        protected virtual void OnRequesExecuting(RequesExecutingEventArgs<T> e)
+        protected virtual void OnRequesExecuting(RequesExecutingEventArgs e)
         {
             if (RequesExecuting != null)
             {
@@ -104,7 +105,7 @@ namespace QueueProcessor
             };
         }
         
-        public void Add(T Request)
+        public void Add(IRequest Request)
         {
             _queue.Add(Request);
         }

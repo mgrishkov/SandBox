@@ -26,7 +26,7 @@ namespace QueueProcessor
 
         static void Main(string[] args)
         {
-            using (var requests = new QueueProcessor<Request>(5))
+            using (var requests = new QueueProcessor(5))
             {
                 requests.RequesExecuting += requests_RequesExecuting;
                 requests.QueueProcessed += requests_QueueProcessed;
@@ -73,7 +73,7 @@ namespace QueueProcessor
             Console.WriteLine("Queue was processed");
         }
 
-        static void requests_RequesExecuting(object sender, QueueProcessor<Program.Request>.RequesExecutingEventArgs<Program.Request> e)
+        static void requests_RequesExecuting(object sender, QueueProcessor.RequesExecutingEventArgs e)
         {
             Console.WriteLine("Request #{0} change state to {1}", e.Request.ID, e.State);
         }
