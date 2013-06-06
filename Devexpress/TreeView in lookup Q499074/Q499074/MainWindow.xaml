@@ -1,0 +1,25 @@
+﻿<Window x:Class="Q499074.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Q499074"
+        Title="MainWindow" Height="350" Width="525" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid">
+    <Window.Resources>
+        <DataTemplate x:Key="popupItemTemplate">
+            <Button Content="{Binding Name}"/>
+        </DataTemplate>
+        <local:ItemTemplateSelector x:Key="itemTemplateSelector" IT="{StaticResource popupItemTemplate}"/>
+    </Window.Resources>
+    <Grid>
+        <dxg:LookUpEdit HorizontalAlignment="Left" Margin="72,80,0,0" Name="lookUpEdit1" VerticalAlignment="Top" Width="270" >
+            <dxg:LookUpEdit.PopupContentTemplate>
+                <ControlTemplate>
+                    <dxg:GridControl Name="PART_GridControl" AutoPopulateColumns="True">
+                        <dxg:GridControl.View>
+                            <dxg:TreeListView Name="treeListView1" TreeDerivationMode="Selfreference" KeyFieldName="ID" ParentFieldName="ParentID"/>
+                        </dxg:GridControl.View>
+                    </dxg:GridControl>
+                </ControlTemplate>
+            </dxg:LookUpEdit.PopupContentTemplate>   
+        </dxg:LookUpEdit>
+    </Grid>
+</Window>
