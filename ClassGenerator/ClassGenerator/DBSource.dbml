@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="FSNext" Class="DBSourceDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost;Initial Catalog=FSNext;Integrated Security=True" SettingsObjectName="ClassGenerator.Properties.Settings" SettingsPropertyName="FSNextConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.DictionaryHeader" Member="DictionaryHeaders">
+    <Type Name="DictionaryHeader">
+      <Column Name="Number" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(4000) NOT NULL" CanBeNull="false" />
+      <Association Name="DictionaryHeader_Dictionary" Member="Dictionaries" ThisKey="Number" OtherKey="DictionaryNumber" Type="Dictionary" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Dictionary" Member="Dictionaries">
+    <Type Name="Dictionary">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DictionaryNumber" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="StringValue" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="DictionaryHeader_Dictionary" Member="DictionaryHeader" ThisKey="DictionaryNumber" OtherKey="Number" Type="DictionaryHeader" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
