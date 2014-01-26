@@ -1,0 +1,53 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ assembly name="System.Windows.Forms" #>
+<#@ import namespace="System.Resources" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.IO" #>
+<#@ output extension=".js"#>
+<#
+    var path = Path.GetDirectoryName(Host.TemplateFile) + "/Resources/";
+    var resourceNames = new string[]
+    {
+        "Errors"
+    };
+    var cultures = new string[] { "en-Gb", "ru-RU" };
+#>
+
+
+var Resources = new Array();
+<#    
+    var i = 0;
+    foreach(var culture in cultures)
+    {
+        var ci = System.Globalization.CultureInfo.GetCultureInfo(culture);
+
+        WriteLine("Resources[\"{0}\"] = {{", ci.TwoLetterISOLanguageName.ToUpper());
+        
+        foreach (var name in resourceNames) 
+        { 
+            var file = Host.ResolvePath(String.Format("{0}{1}.{2}.resx", path, name, culture));
+            ResXResourceSet resxSet= null;
+            if(File.Exists(file))
+            {
+                resxSet = new ResXResourceSet(file);
+            }
+            else
+            {
+                file = Host.ResolvePath(path + name + ".resx" );
+                resxSet = new ResXResourceSet(file);
+            };
+            
+            if(resxSet != null)
+            {
+                foreach (DictionaryEntry itm in resxSet)
+                {
+                    WriteLine("\t{0} : '{1}',", itm.Key, itm.Value);
+                };
+            };
+
+        };
+        
+        i++;
+        WriteLine("};");
+    }
+#>
