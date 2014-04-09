@@ -14,13 +14,7 @@ namespace DBUpdater
         public Version Version { get; set; }
         public string Script { get; private set; }
         public StringBuilder Log { get; private set; }
-        public string FileName
-        {
-            get
-            {
-                return String.Format("{0}.sql", Version);
-            }
-        }
+        public FileInfo File { get; set; }
 
         public Pack()
         {
@@ -28,25 +22,10 @@ namespace DBUpdater
         }
 
         public void Load()
-        {           
-
-            var fileName = Directory.GetFiles(Settings.PacksFolder)
-                .Where(x => x.EndsWith(FileName))
-                .FirstOrDefault();
-
-            if(String.IsNullOrWhiteSpace(fileName))
+        {
+            using (var stream = File.OpenText())
             {
-                using (var mmf = MemoryMappedFile.OpenExisting(fileName))
-                using (var stream = mmf.CreateViewStream())
-                using (var binReader = new BinaryReader(stream))
-                {
-                    var content = binReader.ReadBytes((int)stream.Length);
-                    Script = Encoding.UTF8.GetString(content);
-                };   
-            }
-            else
-            {
-                throw new FileNotFoundException(String.Format("Pack for version {0} has not been found.", Version), String.Format("{0}.sql", Version));
+                Script = stream.ReadToEnd();
             };
         }
         
@@ -59,12 +38,20 @@ namespace DBUpdater
                 throw new ArgumentException("Pack has not been loaded yet");
 
             using (var conn = new SqlConnection(Settings.ConnectionString))
-            using (var cmd = new SqlCommand(Script, conn))
             {
                 conn.Open();
                 conn.InfoMessage += readInfoMessage;
-                cmd.ExecuteNonQuery();
-            }            
+
+                var commands = Script.Split(new string[] { "GO", "go", "Go", "gO" }, StringSplitOptions.RemoveEmptyEntries);
+                foreach(var sql in commands)
+                {
+                    using (var cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    };
+                }
+            }
+            
         }
 
         private void readInfoMessage(object sender, SqlInfoMessageEventArgs e)

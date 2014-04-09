@@ -50,8 +50,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Packs\" />
+    <Content Include="Packs\1.0.0.0.sql" />
+    <Content Include="Packs\1.0.0.1.sql" />
+    <Content Include="Packs\1.0.6.0.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

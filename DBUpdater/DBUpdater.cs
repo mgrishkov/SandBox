@@ -4,29 +4,44 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DBUpdater
 {
     public class DBUpdater
     {
-        private List<Pack> _packs;
+        public class BeforePackInstallEventArgs : EventArgs
+        {
+            public Pack Pack { get; set; }
+            public bool Cancel { get; set; }
+        }
+        public class AfterPackInstallEventArgs : EventArgs
+        {
+            public Pack Pack { get; set; }
+        }
 
-        public Settings Settings { get; private set; }
+        public EventHandler<BeforePackInstallEventArgs> BeforePackInstall;
+        public EventHandler<AfterPackInstallEventArgs> AfterPackInstall;
+
+        private List<Pack> _packs;
 
         public IEnumerable<Pack> Packs
         {
             get { return _packs; }
         }
+
+        public Settings Settings { get; private set; }
         public Version OldVersion { get; private set; }
         public Version NewVersion { get; private set; }
         public StringBuilder Log { get; private set; }
 
         public DBUpdater(string connectionString,
-                         string serviceSchema = "APP",
-                         string packFolder = "Packs")
+                         string serviceSchema,
+                         string packFolder)
         {
             Log = new StringBuilder();
+            _packs = new List<Pack>();
 
             Settings.ConnectionString = connectionString;
             Settings.ServiceSchema = serviceSchema;
@@ -47,11 +62,13 @@ namespace DBUpdater
             {
                 Log.AppendFormat("Installing pack {0}...{1}", itm.Version, Environment.NewLine);
                 itm.Load();
-                itm.Install();
 
+                OnBeforeInstallPack(itm);
+                itm.Install();
                 Log.Append(itm.Log);
-                
-                Log.AppendFormat("Oack {0} has been installed{1}{1}", itm.Version, Environment.NewLine);
+                OnAfterInstallPack(itm);
+
+                Log.AppendFormat("Pack {0} has been installed{1}{1}", itm.Version, Environment.NewLine);
             };
         }
 
@@ -61,14 +78,16 @@ namespace DBUpdater
                 .Where(x => x.EndsWith(".sql"));
             foreach (var itm in files)
             {
-                var file = new FileInfo(itm);
                 Version version = null;
+                var file = new FileInfo(itm);
+                var name = Path.GetFileNameWithoutExtension(itm);
 
-                if(Version.TryParse(file.Name, out version))
+                if(Version.TryParse(name, out version))
                 {
                     var pack = new Pack()
                     {
-                        Version = version
+                        Version = version,
+                        File = file
                     };
                     _packs.Add(pack);
                 };
@@ -80,28 +99,30 @@ namespace DBUpdater
         private void CreateSchema()
         {
             var script = String.Format(
-                @"if(schema_id('[{0}]') is null) 
-                    exec ('create schema [{0}]')
-                go
+                @"if(schema_id('{0}') is null)
+                  begin 
+                    exec ('create schema {0}');
+                  end;
 
-                if(object_id('[{0}].[DBVersion]') is null)
-                    create table [{0}].[DBVersion]
-                    ( 
-                        [ID] int identity,
-                        [Major] int not null, 
-                        [Minor] int not null,
-                        [Build] int not null,
-                        [Revision] int not null,
-                        [InstallationStarted] datetime2 not null,
-                        [InstallationFinished] datetime2,
-                        constraint PK#DBVersion primary key ([ID]),
-                        constraint UK#DBVersion unique ([Major], [Minor], [Build], [Revision])
-                    );
-                go", 
+                 if(object_id('[{0}].[DBVersion]') is null)
+                 begin
+                     create table [{0}].[DBVersion]
+                     ( 
+                         [ID] int identity,
+                         [Major] int not null, 
+                         [Minor] int not null,
+                         [Build] int not null,
+                         [Revision] int not null,
+                         [InstallationStarted] datetime2 not null,
+                         [InstallationFinished] datetime2,
+                         constraint PK#DBVersion primary key ([ID]),
+                         constraint UK#DBVersion unique ([Major], [Minor], [Build], [Revision])
+                     );
+                 end", 
                 Settings.ServiceSchema);
 
             using (var conn = new SqlConnection(Settings.ConnectionString))
-            using (var cmd = new SqlCommand(script, conn))
+            using (var cmd = new SqlCommand(Regex.Replace(script, @"\s+", " "), conn))
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
@@ -110,7 +131,7 @@ namespace DBUpdater
 
         private void GetCurrentVersion()
         {
-            var script = String.Format("select top 1 [Major], [Minor], [Build], [Revision] from [{0}].[DBVersion] order by [Major] desc, [Minor] desc, [Build] desc [Revision] desc", Settings.ServiceSchema);
+            var script = String.Format("select top 1 [Major], [Minor], [Build], [Revision] from [{0}].[DBVersion] where [InstallationFinished] is not null order by [Major] desc, [Minor] desc, [Build] desc, [Revision] desc", Settings.ServiceSchema);
             using (var conn = new SqlConnection(Settings.ConnectionString))
             using (var cmd = new SqlCommand(script, conn))
             {
@@ -133,6 +154,70 @@ namespace DBUpdater
                 };
             };
         }
+        public virtual void OnBeforeInstallPack(Pack pack)
+        {
+            var args = new BeforePackInstallEventArgs() { Pack = pack };
+            if(BeforePackInstall != null)
+            {
+                BeforePackInstall(this, args);
+            };
 
+            if (!args.Cancel)
+            {
+                var script = String.Format(@"if(not exists (select 1
+                                                              from [{0}].[DBVersion]
+                                                             where [Major] = @major
+                                                               and [Minor] = @minor 
+                                                               and [Build] = @build
+                                                               and [Revision] = @revision))
+                                             begin 
+                                                insert into [{0}].[DBVersion] 
+                                                    ([Major], [Minor], [Build], [Revision], [InstallationStarted]) 
+                                                values 
+                                                    (@major, @minor, @build, @revision, getdate());
+                                             end;", Settings.ServiceSchema);
+
+                using (var conn = new SqlConnection(Settings.ConnectionString))
+                using (var cmd = new SqlCommand(Regex.Replace(script, @"\s+", " "), conn))
+                {
+                    conn.Open();
+
+                    cmd.Parameters.Add(new SqlParameter("@major", pack.Version.Major));
+                    cmd.Parameters.Add(new SqlParameter("@minor", pack.Version.Minor));
+                    cmd.Parameters.Add(new SqlParameter("@build", pack.Version.Build));
+                    cmd.Parameters.Add(new SqlParameter("@revision", pack.Version.Revision));
+
+                    cmd.ExecuteNonQuery();
+                };
+            };
+            
+        }
+        public virtual void OnAfterInstallPack(Pack pack)
+        {
+            var script = String.Format(@"update [{0}].[DBVersion] 
+                                            set [InstallationFinished] = getdate() 
+                                          where [Major] = @major
+                                            and [Minor] = @minor
+                                            and [Build] = @build
+                                            and [Revision] = @revision", Settings.ServiceSchema);
+            using (var conn = new SqlConnection(Settings.ConnectionString))
+            using (var cmd = new SqlCommand(Regex.Replace(script, @"\s+", " "), conn))
+            {
+                conn.Open();
+
+                cmd.Parameters.Add(new SqlParameter("@major", pack.Version.Major));
+                cmd.Parameters.Add(new SqlParameter("@minor", pack.Version.Minor));
+                cmd.Parameters.Add(new SqlParameter("@build", pack.Version.Build));
+                cmd.Parameters.Add(new SqlParameter("@revision", pack.Version.Revision));
+
+                cmd.ExecuteNonQuery();
+            };
+
+            var args = new AfterPackInstallEventArgs() { Pack = pack };
+            if (AfterPackInstall != null)
+            {
+                AfterPackInstall(this, args);
+            };
+        }
     }
 }
