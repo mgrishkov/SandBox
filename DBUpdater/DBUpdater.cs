@@ -63,10 +63,14 @@ namespace DBUpdater
                 Log.AppendFormat("Installing pack {0}...{1}", itm.Version, Environment.NewLine);
                 itm.Load();
 
-                OnBeforeInstallPack(itm);
-                itm.Install();
-                Log.Append(itm.Log);
-                OnAfterInstallPack(itm);
+                var args = new BeforePackInstallEventArgs() { Pack = itm };
+                OnBeforeInstallPack(args);
+                if(!args.Cancel)
+                {
+                    itm.Install();
+                    Log.Append(itm.Log);
+                    OnAfterInstallPack(itm);
+                };
 
                 Log.AppendFormat("Pack {0} has been installed{1}{1}", itm.Version, Environment.NewLine);
             };
@@ -154,9 +158,8 @@ namespace DBUpdater
                 };
             };
         }
-        public virtual void OnBeforeInstallPack(Pack pack)
+        public virtual void OnBeforeInstallPack(BeforePackInstallEventArgs args)
         {
-            var args = new BeforePackInstallEventArgs() { Pack = pack };
             if(BeforePackInstall != null)
             {
                 BeforePackInstall(this, args);
@@ -181,6 +184,8 @@ namespace DBUpdater
                 using (var cmd = new SqlCommand(Regex.Replace(script, @"\s+", " "), conn))
                 {
                     conn.Open();
+
+                    var pack = args.Pack;
 
                     cmd.Parameters.Add(new SqlParameter("@major", pack.Version.Major));
                     cmd.Parameters.Add(new SqlParameter("@minor", pack.Version.Minor));
