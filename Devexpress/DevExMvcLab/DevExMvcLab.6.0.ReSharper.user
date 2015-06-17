@@ -1,0 +1,66 @@
+<Configuration>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Controls/f:MvcExtensionBase.cs" caret="0" fromTop="0" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Controls/f:HtmlHelperExtension.cs" caret="531" fromTop="19" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Controls/f:MvcExtensionsFactory.cs" caret="419" fromTop="16" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Controls/f:MvcGridViewSettings.cs" caret="574" fromTop="21" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Controls/f:MvcGridViewExtension.cs" caret="353" fromTop="15" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Data/f:OrgUnit.cs" caret="248" fromTop="11" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Controllers/f:HomeController.cs" caret="2369" fromTop="49" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Utils/f:TreeViewUtils.cs" caret="440" fromTop="12" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:Index.cshtml" caret="466" fromTop="22" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:TreeViewPartial.cshtml" caret="591" fromTop="14" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Controls/f:MvcGridViewSettings.cs" caret="276" fromTop="11" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:Index.cshtml" caret="803" fromTop="10" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Controls/f:MvcGridViewExtension.cs" caret="608" fromTop="22" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:Index.cshtml" caret="477" fromTop="16" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Utils/f:TreeViewUtils.cs" caret="465" fromTop="17" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Data/f:OrgUnit.cs" caret="225" fromTop="11" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:Index.cshtml" caret="422" fromTop="40" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Utils/f:TreeViewUtils.cs" caret="15" fromTop="4" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Utils/f:TreeViewUtils.cs" caret="580" fromTop="19" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Utils/f:TreeViewUtils.cs" caret="204" fromTop="12" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Utils/f:TreeViewUtils.cs" caret="15" fromTop="1" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:Index.cshtml" caret="422" fromTop="19" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:Index.cshtml" caret="422" fromTop="32" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:Index.cshtml" caret="422" fromTop="27" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Utils/f:TreeViewUtils.cs" caret="440" fromTop="12" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:Index.cshtml" caret="422" fromTop="18" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:Index.cshtml" caret="463" fromTop="19" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:TreeViewPartial.cshtml" caret="16" fromTop="0" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:TreeViewPartial.cshtml" caret="1226" fromTop="43" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:TreeViewPartial.cshtml" caret="1197" fromTop="27" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:TreeViewPartial.cshtml" caret="1195" fromTop="17" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:TreeViewPartial.cshtml" caret="915" fromTop="9" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:Index.cshtml" caret="412" fromTop="20" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Controllers/f:HomeController.cs" caret="1412" fromTop="20" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:TreeViewPartial.cshtml" caret="511" fromTop="12" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Controllers/f:HomeController.cs" caret="341" fromTop="15" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Views/d:Home/f:TreeViewPartial.cshtml" caret="904" fromTop="16" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Controllers/f:HomeController.cs" caret="1234" fromTop="29" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Controllers/f:HomeController.cs" caret="2036" fromTop="39" />
+      <File id="5143CA09-1D8F-4C89-9D2D-3F0C3E76DD3B/d:Controllers/f:HomeController.cs" caret="2327" fromTop="44" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir IsNull="False">
+    </NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+</Configuration>

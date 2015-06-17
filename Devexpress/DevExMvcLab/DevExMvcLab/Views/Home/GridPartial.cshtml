@@ -1,0 +1,62 @@
+﻿@using System.Web.UI.WebControls
+@using DevExMvcLab.Models
+
+@model List<TestModel>
+
+
+    @Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvTest";
+    settings.KeyFieldName = "Field01";
+    settings.CallbackRouteValues = new { Controller = "Home", Action = "GridPartial" };
+    settings.Width = Unit.Percentage(100);
+    
+    
+    settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+    
+    /*
+    settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "EnterpriseStructurePlan", Action = "AddPlanObject" };
+    settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "EnterpriseStructurePlan", Action = "EditPlanObject" };
+    settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "EnterpriseStructurePlan", Action = "DeletePlanObject" };
+    */
+
+    
+    
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = false;
+    settings.Settings.ShowFilterRowMenu = false;
+    settings.Settings.ShowFooter = false;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 360;
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+
+    settings.SettingsPager.AlwaysShowPager = true;
+    settings.SettingsPager.Visible = true;
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+    settings.SettingsPager.Position = PagerPosition.Bottom;
+    settings.SettingsPager.ShowNumericButtons = true;
+    settings.SettingsPager.NumericButtonCount = 6;
+    settings.SettingsPager.PageSize = 2;
+
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Disabled;
+    settings.SettingsBehavior.AllowSelectByRowClick = false;
+    settings.SettingsBehavior.AllowSelectSingleRowOnly = true;
+    settings.SettingsBehavior.AllowFocusedRow = true;
+
+    settings.SettingsDetail.ShowDetailRow = false;
+
+    settings.Columns.Add("Field01");
+    settings.Columns.Add("Field02");
+
+
+    settings.BeforeGetCallbackResult = (s, e) =>
+    {
+        var ctrl = (MVCxGridView)s;
+        /*if (Model.PlanObjectSelected != null && !ctrl.IsEditing)
+        {
+            var key = String.Format("{0}|{1}", Model.PlanObjectSelected.PlanID, Model.PlanObjectSelected.PositionID);
+            ctrl.FocusedRowIndex = ctrl.FindVisibleIndexByKeyValue(key);
+        }*/
+    };
+
+}).Bind(Model).GetHtml()

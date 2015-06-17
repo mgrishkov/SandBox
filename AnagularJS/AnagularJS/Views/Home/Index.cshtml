@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/__rootLayout.cshtml";
+}
+<script src="~/Scripts/controllers/filters.js"></script>
+<script src="~/Scripts/controllers/controllers.js"></script>
+
+
+<div>
+    <p ng-init=" name='World' ">Hello {{name}}!</p>
+    <p>Hello {{1 + 2 * 3}}!</p>
+    <br />
+    <br />
+
+    <div ng-controller="HomeCtrl">
+        <p>Search:<input ng-model="searchBy.ID" /></p>
+        <p>
+            Order By:
+            <select ng-model="orderBy">
+                <option value="ID">ID</option>
+                <option value="FirstName">First Name</option>
+                <option value="LastName">Last Name</option>
+                <option value="BirthDate">Birth Date</option>
+                <option value="vehicle.Brand">Vehicle Brand</option>
+            </select>
+        </p>
+        <ul>
+            <li ng-repeat="driver in drivers | orderBy:orderBy" ng-class="{bold: searchBy.ID == driver.ID}">
+                <p>Водитель: {{driver.LastName | normalCase}} {{driver.FirstName  | normalCase}} ({{driver.BirthDate | formatDate:"dd.MM.YYYY" }})</p>
+                <p ng-bind-template="Автомобиль: {{driver.Vehicle.Brand}} {{driver.Vehicle.Model}} ({{driver.Vehicle.RegistrationTag}})">Автомобиль</p>
+                <img ng-src="{{driver.Vehicle.imageurl}}"/>
+            </li>
+        </ul>
+        <br />
+
+        <table>
+            <tr><th>row number</th></tr>
+            <tr ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7]"><td>{{i}}</td></tr>
+        </table>
+
+        <br />
+        <ul>
+            <li ng-repeat="driver in drivers | filter:searchBy">
+                <p>Водитель: {{driver.LastName | normalCase}} {{driver.FirstName  | normalCase}} ({{driver.BirthDate | formatDate:"dd.MM.YYYY" }})</p>
+                <p>Автомобиль: {{driver.Vehicle.Brand}} {{driver.Vehicle.Model}} ({{driver.Vehicle.RegistrationTag }})</p>
+                <img ng-src="{{driver.Vehicle.imageurl}}" />
+            </li>
+        </ul>
+        <br />
+
+    </div>
+
+    <br />
+    <br />
+
+
+</div>
+
+
