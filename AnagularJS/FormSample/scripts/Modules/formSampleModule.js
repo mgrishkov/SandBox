@@ -1,3 +1,3 @@
 /// <reference path="../_refferences.js" />
 
-angular.module("formSampleModule", []);
+angular.module("formSampleModule", ["EnumsModule"]);
