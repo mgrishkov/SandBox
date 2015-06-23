@@ -7,57 +7,23 @@
     <link href="css/3rd Party/bootstrap-theme.min.css" rel="stylesheet" />
     <link href="css/3rd Party/bootstrap.min.css" rel="stylesheet" />
 
-    <script src="scripts\3rd Party\angular.min.js"></script>
-    <script src="scripts/Modules/enumsModule.js"></script>
-    <script src="scripts\Modules\formSampleModule.js"></script>
-    <script src="scripts\Controllers\formSampleController.js"></script>
+    <script src="scripts/3rd Party/angular.min.js"></script>
+    <script src="scripts/Services/enumsService.js"></script>
+    <script src="scripts/Modules/formSampleModule.js"></script>
+    <script src="scripts/Controllers/formSampleController.js"></script>
     
 
     </head>
-    <body ng-controller="formSampleController">
-        <div class="container">
-            <div class="panel panel-default col-md-4">
-                <div class="panel-heading">Edit Form</div>
-                <div class="panel-body">
-                    <form name="userForm" novalidate ng-submit="PerformAction(SelectedUser)">
-                        <div class="form-group">
-                            <label>Login:</label>
-                            <input name="userLogin" type="text" class="form-control"
-                                   required ng-model="SelectedUser.Login" />
-                        </div>
-                        <div class="form-group">
-                            <label>Emial:</label>
-                            <input name="userEmail" type="email" class="form-control"
-                                   required ng-model="SelectedUser.Email" />
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block"
-                                ng-disabled="userForm.$invalid">
-                            Save
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>    
-        <div class="panel well">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Login</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="user in Users">
-                        <td>
-                            <input type="checkbox" ng-model="user.IsSelected"/>
-                        </td>
-                        <td>{{user.Login}}</td>
-                        <td>{{user.Email}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <body>
+        <div class="container col-xs-12">
+            <div class="row">
+                <div class="col-xs-1 col-md-1"></div>
+                <div class="col-xs-10 col-md-10 well" ng-controller="formSampleController">
 
+                </div>
+                <div class="col-xs-1 col-md-1"></div>
+            </div>
+        </div>
+        
     </body>
 </html>

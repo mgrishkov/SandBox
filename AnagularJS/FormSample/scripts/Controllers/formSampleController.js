@@ -3,22 +3,22 @@
 angular
 	.module("formSampleModule")
 	.controller("formSampleController", function ($scope, Enums) {
-		$scope.Users = [ { Login: "FirstUser" , Email: "first-user@gmail.com" }
-			           , { Login: "SecondUser", Email: "second-user@gmail.com" } ];
+	    $scope.Requests = [ { RequestTypeID: 1, RequestTypeName: "Visitor Pass", RequestFor: { FirstName      : "Maxim"         , LastName: "Grishkov"      }, AccessAreas: [ { ID: 1, Name: "Adm. 1st floor" }, { ID: 2, Name: "Adm. 2nd floor"}] }
+			              , { RequestTypeID: 2, RequestTypeName: "Vehicle Pass", RequestFor: { RegistrationTag: "M722HY 178RUSS", Model   : "Honda Insight" }, AccessAreas: [ { ID: 1, Name: "Parking"        }                                  ] } ];
 
-        $scope.SelectedUser = {
+        $scope.SelectedRequest = {
             EditFormAction: Enums.FormAction.Create
         };
 
-		$scope.PerformAction = function(user) {
+        $scope.PerformAction = function (request) {
 		    switch (user.EditFormAction) {
 		        case Enums.FormAction.Create:
-		            $scope.Create(user);
+		            $scope.Create(request);
                     break;
 		    }
 		}
 
-        $scope.Create = function(newUser) {
-            $scope.Users.push(newUser);
+        $scope.Create = function(newRequest) {
+            $scope.Requests.push(newRequest);
         }
 	});
