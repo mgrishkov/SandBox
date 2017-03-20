@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js"></script>
+    <script src="hubs.js"></script>
+</head>
+<body>
+
+<button id="call">CallEcho</button>
+
+<ul id="postsList"></ul>
+
+
+<script type="text/javascript">
+    
+
+    var con = $.connection;
+    var hub = con.testHub;
+
+    hub.client.echo = function(msg) {
+        $("#postsList").append('<li>' + msg + '</li><br>');
+    };
+
+    $("#call").click(function() {
+        hub.server.callEcho("Test");
+    });
+
+    $.connection.hub.logging = true;
+    $.connection.hub.start();
+</script>
+</body>
+</html>
