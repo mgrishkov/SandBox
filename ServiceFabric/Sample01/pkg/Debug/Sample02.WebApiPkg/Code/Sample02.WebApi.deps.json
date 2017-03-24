@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETFramework,Version=v4.5.2/win7-x64",
-    "signature": "b1bf8927e65fab0bef66f26126b84bba914af0bf"
+    "signature": "12e8dee8ed53413c4a2b7d5764c1ceb824bc8e75"
   },
   "compilationOptions": {
     "defines": [
@@ -28,7 +28,7 @@
           "Microsoft.AspNetCore.Mvc": "1.1.2",
           "Microsoft.Extensions.Logging.Debug": "1.1.1",
           "Microsoft.ServiceFabric": "5.4.164",
-          "Microsoft.ServiceFabric.AspNetCore.WebListener": "2.4.164-preview",
+          "Microsoft.ServiceFabric.AspNetCore.Kestrel": "2.5.216",
           "Microsoft.ServiceFabric.Data": "2.4.164",
           "Microsoft.ServiceFabric.Services": "2.4.164"
         },
@@ -893,16 +893,6 @@
           "lib/net451/Microsoft.AspNetCore.Server.Kestrel.dll": {}
         }
       },
-      "microsoft.aspnetcore.server.weblistener/1.0.0": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Hosting": "1.1.1",
-          "Microsoft.Net.Http.Headers": "1.1.1",
-          "Microsoft.Net.Http.Server": "1.0.0"
-        },
-        "compile": {
-          "lib/net451/Microsoft.AspNetCore.Server.WebListener.dll": {}
-        }
-      },
       "microsoft.aspnetcore.webutilities/1.1.1": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "1.1.0",
@@ -1232,15 +1222,6 @@
           "lib/netstandard1.1/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "microsoft.net.http.server/1.0.0": {
-        "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "1.1.1",
-          "Microsoft.Extensions.Primitives": "1.1.0"
-        },
-        "compile": {
-          "lib/net451/Microsoft.Net.Http.Server.dll": {}
-        }
-      },
       "microsoft.netcore.platforms/1.1.0": {},
       "microsoft.servicefabric/5.4.164": {
         "compile": {
@@ -1250,16 +1231,21 @@
           "lib/net45/System.Fabric.dll": {}
         }
       },
-      "microsoft.servicefabric.aspnetcore.weblistener/2.4.164-preview": {
+      "microsoft.servicefabric.aspnetcore.kestrel/2.5.216": {
         "dependencies": {
+          "Microsoft.AspNetCore.Hosting": "1.1.1",
           "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.1",
           "Microsoft.AspNetCore.Hosting.Server.Abstractions": "1.1.1",
+          "Microsoft.AspNetCore.Http.Abstractions": "1.1.1",
           "Microsoft.AspNetCore.Http.Features": "1.1.1",
-          "Microsoft.AspNetCore.Server.WebListener": "1.0.0",
+          "Microsoft.AspNetCore.Server.Kestrel": "1.1.1",
+          "Microsoft.Extensions.DependencyInjection": "1.1.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.1.0",
           "Microsoft.ServiceFabric.Services": "2.4.164"
         },
         "compile": {
-          "lib/net452/Microsoft.ServiceFabric.AspNetCore.WebListener.dll": {}
+          "lib/net452/Microsoft.ServiceFabric.AspNetCore.Kestrel.dll": {},
+          "lib/net452/Microsoft.ServiceFabric.AspNetCore.dll": {}
         }
       },
       "microsoft.servicefabric.data/2.4.164": {
@@ -1424,7 +1410,7 @@
           "Microsoft.AspNetCore.Mvc": "1.1.2",
           "Microsoft.Extensions.Logging.Debug": "1.1.1",
           "Microsoft.ServiceFabric": "5.4.164",
-          "Microsoft.ServiceFabric.AspNetCore.WebListener": "2.4.164-preview",
+          "Microsoft.ServiceFabric.AspNetCore.Kestrel": "2.5.216",
           "Microsoft.ServiceFabric.Data": "2.4.164",
           "Microsoft.ServiceFabric.Services": "2.4.164"
         },
@@ -1957,16 +1943,6 @@
           "lib/net451/Microsoft.AspNetCore.Server.Kestrel.dll": {}
         }
       },
-      "microsoft.aspnetcore.server.weblistener/1.0.0": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Hosting": "1.1.1",
-          "Microsoft.Net.Http.Headers": "1.1.1",
-          "Microsoft.Net.Http.Server": "1.0.0"
-        },
-        "runtime": {
-          "lib/net451/Microsoft.AspNetCore.Server.WebListener.dll": {}
-        }
-      },
       "microsoft.aspnetcore.webutilities/1.1.1": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "1.1.0",
@@ -2296,15 +2272,6 @@
           "lib/netstandard1.1/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "microsoft.net.http.server/1.0.0": {
-        "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "1.1.1",
-          "Microsoft.Extensions.Primitives": "1.1.0"
-        },
-        "runtime": {
-          "lib/net451/Microsoft.Net.Http.Server.dll": {}
-        }
-      },
       "microsoft.netcore.platforms/1.1.0": {},
       "microsoft.servicefabric/5.4.164": {
         "runtime": {
@@ -2314,16 +2281,21 @@
           "lib/net45/System.Fabric.dll": {}
         }
       },
-      "microsoft.servicefabric.aspnetcore.weblistener/2.4.164-preview": {
+      "microsoft.servicefabric.aspnetcore.kestrel/2.5.216": {
         "dependencies": {
+          "Microsoft.AspNetCore.Hosting": "1.1.1",
           "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.1",
           "Microsoft.AspNetCore.Hosting.Server.Abstractions": "1.1.1",
+          "Microsoft.AspNetCore.Http.Abstractions": "1.1.1",
           "Microsoft.AspNetCore.Http.Features": "1.1.1",
-          "Microsoft.AspNetCore.Server.WebListener": "1.0.0",
+          "Microsoft.AspNetCore.Server.Kestrel": "1.1.1",
+          "Microsoft.Extensions.DependencyInjection": "1.1.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.1.0",
           "Microsoft.ServiceFabric.Services": "2.4.164"
         },
         "runtime": {
-          "lib/net452/Microsoft.ServiceFabric.AspNetCore.WebListener.dll": {}
+          "lib/net452/Microsoft.ServiceFabric.AspNetCore.Kestrel.dll": {},
+          "lib/net452/Microsoft.ServiceFabric.AspNetCore.dll": {}
         }
       },
       "microsoft.servicefabric.data/2.4.164": {
@@ -2809,13 +2781,6 @@
       "path": "microsoft.aspnetcore.server.kestrel/1.1.1",
       "hashPath": "microsoft.aspnetcore.server.kestrel.1.1.1.nupkg.sha512"
     },
-    "microsoft.aspnetcore.server.weblistener/1.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-QNViMMDGwcpapf2qsy+NuJIZ0v8ljy/f9V+5daatiZ33PB3GmkAGcQ0sE+beAfL3dOcYzpQq2qwUFSi9465/Sw==",
-      "path": "microsoft.aspnetcore.server.weblistener/1.0.0",
-      "hashPath": "microsoft.aspnetcore.server.weblistener.1.0.0.nupkg.sha512"
-    },
     "microsoft.aspnetcore.webutilities/1.1.1": {
       "type": "package",
       "serviceable": true,
@@ -3068,13 +3033,6 @@
       "path": "microsoft.net.http.headers/1.1.1",
       "hashPath": "microsoft.net.http.headers.1.1.1.nupkg.sha512"
     },
-    "microsoft.net.http.server/1.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-1Y7Xk420YZIJ/gKHeyPYTkEb1VLydfJhxWCb35OyQmIYve/u1fcMV+9SPAOUD9ZaDmV1QALQMYNGfGwMZCQStA==",
-      "path": "microsoft.net.http.server/1.0.0",
-      "hashPath": "microsoft.net.http.server.1.0.0.nupkg.sha512"
-    },
     "microsoft.netcore.platforms/1.1.0": {
       "type": "package",
       "serviceable": true,
@@ -3089,12 +3047,12 @@
       "path": "microsoft.servicefabric/5.4.164",
       "hashPath": "microsoft.servicefabric.5.4.164.nupkg.sha512"
     },
-    "microsoft.servicefabric.aspnetcore.weblistener/2.4.164-preview": {
+    "microsoft.servicefabric.aspnetcore.kestrel/2.5.216": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-wK6zxYUV5IGVH7FDSPjdyNdWB824OpcvZYVEYoKiIvQBhDT3EYXw140UDw+XcZ5lwAG0EvTIvCI2JoCdzhUJLA==",
-      "path": "microsoft.servicefabric.aspnetcore.weblistener/2.4.164-preview",
-      "hashPath": "microsoft.servicefabric.aspnetcore.weblistener.2.4.164-preview.nupkg.sha512"
+      "sha512": "sha512-29X07LMPk6JUjhdbROfwTWrNEdEQJuMc7bYPbMmSfgxS7iTVK9c1xm2D7FFQP/T0i1qaQSpKNyduEeSTyaaQ9Q==",
+      "path": "microsoft.servicefabric.aspnetcore.kestrel/2.5.216",
+      "hashPath": "microsoft.servicefabric.aspnetcore.kestrel.2.5.216.nupkg.sha512"
     },
     "microsoft.servicefabric.data/2.4.164": {
       "type": "package",

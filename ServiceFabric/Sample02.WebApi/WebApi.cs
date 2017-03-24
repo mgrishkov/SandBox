@@ -31,11 +31,11 @@ namespace Sample02.WebApi
             return new ServiceInstanceListener[]
             {
                 new ServiceInstanceListener(serviceContext =>
-                    new WebListenerCommunicationListener(serviceContext, "Sample02EndPoint", url =>
+                    new KestrelCommunicationListener(serviceContext, "Sample02EndPoint", (url, wh) =>
                     {
                         ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting WebListener on {url}");
-
-                        return new WebHostBuilder().UseWebListener()
+                        
+                        return new WebHostBuilder().UseKestrel()
                                     .ConfigureServices(
                                         services => services
                                             .AddSingleton<StatelessServiceContext>(serviceContext))

@@ -30,7 +30,7 @@ namespace Sample01.WebApi
         {
             return new ServiceInstanceListener[]
             {
-                new ServiceInstanceListener(serviceContext => new WebListenerCommunicationListener(serviceContext, "Sample01EndPoint", url =>
+                new ServiceInstanceListener(serviceContext => new WebListenerCommunicationListener(serviceContext, "Sample01EndPoint", (url, wh) =>
                     {
                         ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting WebListener on {url}");
 
