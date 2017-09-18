@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+    <script src="signalr-client-1.0.0-alpha1-final.min.js"></script>    
+</head>
+<body>
+
+<button id="sendMessageToAllButton">Send message to all</button>
+
+<ul id="list"></ul>
+
+
+<script type="text/javascript">
+$( document ).ready(function() {
+	
+	let logger = new signalR.ConsoleLogger(signalR.LogLevel.Information);
+	let http   = new signalR.HttpConnection('http://localhost:8679/sample', { logger: logger });
+	
+	let connection = new signalR.HubConnection(http, logger);
+
+	connection.on('NewBroadcastMessage', function(message) {
+		$("#list").append('<li>' + message + '</li><br>');
+	});
+
+	$("#sendMessageToAllButton").click(function() {
+		connection.invoke('SendToAll', "Help me!").catch(err => console.log(err));
+    });
+	
+	connection.start().catch(err => console.log(err));
+});
+
+</script>
+</body>
+</html>
