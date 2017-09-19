@@ -4,6 +4,6 @@ namespace SignalRStatelessService.Hubs
 {
     public interface ITestHub
     {
-        void CallEcho(string message);
+        Task SendToAll(string message);
     }
 }

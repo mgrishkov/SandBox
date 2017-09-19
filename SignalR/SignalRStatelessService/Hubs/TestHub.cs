@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -8,9 +9,10 @@ using Microsoft.Extensions.Logging;
 
 namespace SignalRStatelessService.Hubs
 {
-    public class TestHub : Hub
+    public class TestHub : Hub, ITestHub
     {
         private readonly ILogger<TestHub> _logger;
+        
 
         public TestHub(ILogger<TestHub> logger)
         {
@@ -23,7 +25,7 @@ namespace SignalRStatelessService.Hubs
 
             _logger.LogInformation($"{Context.ConnectionId} - connected");
 
-            return Clients.All.InvokeAsync("NewBroadcastMessage", $"Congratulation! [{Context.ConnectionId}] joined!");
+            return SendToAll($"Congratulation! [{Context.ConnectionId}] joined!");
         }
         
         public override Task OnDisconnectedAsync(Exception exception)
@@ -32,7 +34,7 @@ namespace SignalRStatelessService.Hubs
 
             _logger.LogInformation($"{Context.ConnectionId} - disconnected");
 
-            return Clients.All.InvokeAsync("NewBroadcastMessage", $"Bad news! [{Context.ConnectionId}] left!");
+            return SendToAll($"Bad news! [{Context.ConnectionId}] left!");
         }
         
         public async Task SendToAll(string message)

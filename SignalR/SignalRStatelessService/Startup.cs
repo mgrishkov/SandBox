@@ -25,13 +25,7 @@ namespace SignalRStatelessService
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
-            //if (env.IsDevelopment())
-            //{
-            //    // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-            //    builder.AddUserSecrets<Startup>();
-            //}
-
+            
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -46,7 +40,10 @@ namespace SignalRStatelessService
 
             services.AddSignalR();
 
+            //services.AddSingleton<ITestHub, TestHub>();
+
             services.AddTask<TimeEngine>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +55,7 @@ namespace SignalRStatelessService
 
             app.UseMvc();
 
-            //app.StartTask<TimeEngine>(TimeSpan.FromSeconds(5));
+            app.StartTask<TimeEngine>(TimeSpan.FromSeconds(5));
         }
     }
 }
